@@ -1,0 +1,85 @@
+.styled-form {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.form-grid {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.form-column {
+  flex: 1 1 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 15px;
+  padding-top: 30px;
+}
+
+.form-buttons button {
+  width: 140px;
+  align-self: flex-end;
+}
+
+.result-box {
+  margin-top: 40px;
+  background: #f9f9f9;
+  padding: 20px 30px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.result-box h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #444;
+}
+
+.result-box p {
+  margin: 5px 0;
+  font-size: 15px;
+}
+
+mat-table {
+  width: 100%;
+  margin-top: 30px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+mat-header-cell,
+mat-cell {
+  padding: 12px;
+  text-align: center;
+}
+
+mat-header-row {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
