@@ -1,8 +1,9 @@
 <div class="styled-form">
-  <div class="title">Registro de Bono Corporativo</div>
+  <h2 class="form-title">📄 Registro de Bono Corporativo</h2>
 
   <form [formGroup]="form">
     <div class="form-grid">
+      <!-- Columna izquierda -->
       <div class="form-column">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Nombre del bono</mat-label>
@@ -11,7 +12,11 @@
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Monto nominal</mat-label>
-          <input matInput type="number" formControlName="montonominal" />
+          <input matInput type="number" min="0" formControlName="montonominal" (keydown)="bloquearSimbolos($event)"
+    (paste)="bloquearPegado($event)"/>
+          <mat-error *ngIf="form.get('montonominal')?.hasError('montoInvalido')">
+            Solo se permite 1000, 2000, 3000, 4000 o 5000.
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
@@ -22,29 +27,28 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Tasa de interés (%)</mat-label>
-          <input matInput type="number" formControlName="tasainteres" />
+          <mat-label>TEA (%)</mat-label>
+          <input matInput type="number" min="0" formControlName="tasainteres" (keydown)="bloquearSimbolos($event)"
+    (paste)="bloquearPegado($event)"/>
         </mat-form-field>
       </div>
 
+      <!-- Columna derecha -->
       <div class="form-column">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Frecuencia de pago</mat-label>
-          <mat-select formControlName="frecuenciapago">
+          <mat-select formControlName="frecuenciapago" (selectionChange)="generarPeriodos()">
             <mat-option *ngFor="let f of frecuencias" [value]="f">{{ f }}</mat-option>
-          </mat-select>
+          </mat-select> 
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Plazo en meses</mat-label>
-          <input matInput type="number" formControlName="plazomeses" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Período de gracia</mat-label>
-          <mat-select formControlName="pgracia">
-            <mat-option *ngFor="let g of gracias" [value]="g">{{ g }}</mat-option>
-          </mat-select>
+          <mat-label>Plazo en años</mat-label>
+          <input matInput type="number" min="0" formControlName="plazoanios" (input)="generarPeriodos()"  (keydown)="bloquearSimbolos($event)"
+    (paste)="bloquearPegado($event)" />
+          <mat-error *ngIf="form.get('plazoanios')?.hasError('min')">
+            El plazo debe ser de al menos 3 años.
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
@@ -54,20 +58,28 @@
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
+    </div>
 
-      <div class="form-buttons">
-        <button mat-stroked-button color="primary" type="button" (click)="calcular()">CALCULAR</button>
-        <button mat-stroked-button color="accent" type="button" (click)="guardar()" [disabled]="form.invalid || !resultado">GUARDAR</button>
-      </div>
+    <div class="form-buttons">
+      <button mat-raised-button color="primary" type="button" (click)="calcular()"
+        [disabled]="form.invalid || form.get('montonominal')?.hasError('montoInvalido') || !validaPlazo()">
+        📊 Calcular
+      </button>
+
+      <button mat-raised-button color="accent" type="button" (click)="guardar()" [disabled]="form.invalid || !resultado">
+        💾 Guardar
+      </button>
     </div>
   </form>
 
-  <div *ngIf="!resultado && flujos.length === 0" class="mt-4" style="color: #777;">
-    Por favor, complete el formulario y presione <strong>CALCULAR</strong> para ver el flujo de caja y métricas.
+  <!-- Mensaje inicial -->
+  <div *ngIf="!resultado && flujos.length === 0" class="hint-text">
+    🛈 Complete el formulario y presione <strong>CALCULAR</strong> para ver el flujo de caja.
   </div>
 
-  <div *ngIf="resultado" class="result-box mt-8">
-    <h3>Resultado financiero</h3>
+  <!-- Resultados -->
+  <div *ngIf="resultado" class="result-box">
+    <h3>📈 Resultado Financiero</h3>
     <p><strong>TCEA:</strong> {{ resultado.tcea * 100 | number:'1.2-2' }}%</p>
     <p><strong>TREA:</strong> {{ resultado.trea * 100 | number:'1.2-2' }}%</p>
     <p><strong>Duración:</strong> {{ resultado.duracion | number:'1.2-2' }}</p>
@@ -76,7 +88,7 @@
     <p><strong>Precio Máximo:</strong> {{ resultado.precio_maximo | currency:form.value.moneda }}</p>
   </div>
 
-  <mat-table *ngIf="flujos.length > 0" [dataSource]="flujos" class="mat-elevation-z8 mt-6">
+  <mat-table *ngIf="flujos.length > 0" [dataSource]="flujos" class="mat-elevation-z8 mt-4 flow-table">
     <ng-container matColumnDef="periodo">
       <th mat-header-cell *matHeaderCellDef>Periodo</th>
       <td mat-cell *matCellDef="let f">{{ f.periodo }}</td>
@@ -106,6 +118,21 @@
       <th mat-header-cell *matHeaderCellDef>Saldo</th>
       <td mat-cell *matCellDef="let f">{{ f.saldo | number:'1.2-2' }}</td>
     </ng-container>
+
+ <ng-container matColumnDef="graciaPeriodo">
+  <th mat-header-cell *matHeaderCellDef>Gracia</th>
+  <td mat-cell *matCellDef="let f; let i = index" [formGroup]="graciaFormArray.at(i)">
+    <ng-container *ngIf="i < 3; else emptyCell">
+      <mat-select formControlName="tipo" class="gracia-select" disableRipple>
+        <mat-option *ngFor="let g of gracias" [value]="g">{{ g }}</mat-option>
+      </mat-select>
+    </ng-container>
+    <ng-template #emptyCell>
+      <span class="no-gracia">—</span>
+    </ng-template>
+  </td>
+</ng-container>
+
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>

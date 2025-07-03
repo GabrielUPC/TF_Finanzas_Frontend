@@ -1,55 +1,59 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Ofertas</title>
-   
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body>
-  <div class="container my-5">
-    <div class="row align-items-center mb-6">
-        <div class="col-md-6">
-            <h2 class="text-uppercase ">Misión</h2>
-            <p class="text-justify" style="color: #333;">
-                Nuestra misión es reducir el desperdicio de alimentos proporcionando una plataforma donde los productos cercanos a vencer puedan ser vendidos a precios reducidos. Buscamos conectar a los consumidores conscientes con los vendedores para fomentar el consumo sostenible y responsable.
-            </p>
+<div class="container my-5">
+
+  <!-- HEADER -->
+  <header class="pb-3 mb-4 border-bottom">
+    <h1 class="text-center fw-bold titulo-principal">Sistema de Bonos Corporativos</h1>
+    <p class="text-center subtitulo">Calcula flujos, TCEA y TREA según el método americano</p>
+  </header>
+
+  <!-- HERO -->
+  <section class="p-4 p-md-5 mb-5 text-white rounded bg-dark shadow hero-box">
+    <div class="col-md-10 mx-auto text-center">
+      <h2 class="display-5 fw-bold">¿Qué es un Bono?</h2>
+      <p class="lead mt-3">Es un instrumento financiero donde empresas obtienen financiamiento del público inversionista.</p>
+    </div>
+  </section>
+
+  <!-- TARJETAS -->
+  <section class="row mb-4">
+
+    <!-- Bono Corporativo -->
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 hover-card">
+        <img src="assets/Bono.jpg" class="card-img-top" alt="Bono Corporativo">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Bono Corporativo</h5>
+          <p class="card-text">Instrumento que permite a empresas obtener capital y al inversionista recibir intereses.</p>
         </div>
-        <div class="col-md-6 d-flex justify-content-center">
-            <!-- Aquí puedes agregar una imagen relacionada con la misión -->
-            <img src="assets/comida.jpg" class="img-fluid" alt="Imagen relacionada con la misión">
-        </div>
+      </div>
     </div>
 
-    <div class="row align-items-center mb-6 flex-row-reverse">
-        <div class="col-md-6">
-            <h2 class="text-uppercase  mb-3">Visión</h2>
-            <p class="text-justify">
-                Ser la plataforma líder en la reducción de desperdicio de alimentos en la región, promoviendo un estilo de vida sostenible y accesible para todos, donde los productos cercanos a vencer encuentren una segunda oportunidad antes de ser desechados.
-            </p>
+    <!-- Flujo Americano -->
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 hover-card">
+        <img src="assets/FlujoAmericano.jpg" class="card-img-top" alt="Flujo Americano">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Flujo Americano</h5>
+          <p class="card-text">Solo se pagan intereses periódicamente y el capital se devuelve en el último pago.</p>
         </div>
-        <div class="col-md-6 d-flex justify-content-center">
-            <!-- Aquí puedes agregar una imagen relacionada con la visión -->
-            <img src="assets/alimentos.jpg" class="img-fluid" alt="Imagen relacionada con la visión">
-        </div>
+      </div>
     </div>
 
-    <div class="row align-items-center mb-6">
-        <div class="col-md-6">
-            <h2 class="text-uppercase  mb-3">Quiénes Somos</h2>
-            <p class="text-justify">
-                DameTuYapa es una empresa comprometida con la sostenibilidad y la reducción del desperdicio de alimentos. Creemos en dar una segunda oportunidad a los productos que aún están en perfecto estado, ayudando tanto a los vendedores a reducir pérdidas, como a los consumidores a acceder a productos de calidad a precios más bajos.
-            </p>
+    <!-- TREA vs TCEA -->
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 hover-card">
+        <img src="assets/TREA.png" class="card-img-top" alt="TREA vs TCEA">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">TREA vs TCEA</h5>
+          <p class="card-text">TREA mide la ganancia real del inversionista, TCEA el costo real del emisor.</p>
         </div>
-        <div class="col-md-6 d-flex justify-content-center">
-            <!-- Aquí puedes agregar una imagen relacionada con quiénes somos -->
-            <img src="assets/dtyp.png" class="img-fluid" alt="Imagen relacionada con quiénes somos">
-        </div>
+      </div>
     </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="pt-4 mt-4 border-top text-center small footer-text">
+    © 2025 Sistema de Bonos – Proyecto Finanzas
+  </footer>
 </div>
-
-<!-- Incluyendo Bootstrap JS desde la CDN -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>

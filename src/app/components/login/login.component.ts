@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
         if (data.token && data.token.split('.').length === 3) {
           sessionStorage.setItem('token', data.token);
           console.log('✅ Token guardado:', data.token);
-          this.router.navigate(['/bono-form']);
+          this.router.navigate(['/homes']);
         } else {
           this.snackBar.open('❌ Token inválido recibido del servidor.', 'Cerrar', { duration: 3000 });
         }
