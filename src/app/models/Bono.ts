@@ -7,8 +7,9 @@ export class Bono {
   frecuenciapago: string = "";
   plazomeses: number = 0;
   fechaemision: Date = new Date(Date.now());
+  tasaCOK: number = 0;
   idUsuario: number = 0;
 
-  // ⚠️ Nuevo campo para mapear gracia por periodo
+  
   mapaGraciaPorPeriodo: { [periodo: number]: string } = {};
 }

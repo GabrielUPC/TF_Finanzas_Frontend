@@ -62,6 +62,7 @@ export class BonoFormComponent implements OnInit {
       montonominal: [null, [Validators.required, this.validarMontoNominal]],
       moneda: ['', Validators.required],
       tasainteres: [null, [Validators.required, Validators.min(0)]],
+      tasaCOK: [null, [Validators.required, Validators.min(0)]],
       frecuenciapago: ['', Validators.required],
       plazoanios: [null, [Validators.required, Validators.min(3)]], 
       fechaemision: [null, Validators.required],

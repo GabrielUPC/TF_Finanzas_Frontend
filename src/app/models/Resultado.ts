@@ -5,4 +5,5 @@ export class Resultado {
   duracion_modificada: number=0;
   convexidad: number=0;
   precio_maximo: number=0;
+  precio_mercado: number=0;
 }

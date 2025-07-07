@@ -31,6 +31,7 @@
           <input matInput type="number" min="0" formControlName="tasainteres" (keydown)="bloquearSimbolos($event)"
     (paste)="bloquearPegado($event)"/>
         </mat-form-field>
+        
       </div>
 
       <!-- Columna derecha -->
@@ -50,7 +51,11 @@
             El plazo debe ser de al menos 3 años.
           </mat-error>
         </mat-form-field>
-
+<mat-form-field appearance="outline" class="full-width">
+  <mat-label>COK del mercado (TEA %)</mat-label>
+  <input matInput type="number" formControlName="tasaCOK" min="0"
+    (keydown)="bloquearSimbolos($event)" (paste)="bloquearPegado($event)" />
+</mat-form-field>
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Fecha de emisión</mat-label>
           <input matInput [matDatepicker]="picker" formControlName="fechaemision" />
@@ -85,7 +90,12 @@
     <p><strong>Duración:</strong> {{ resultado.duracion | number:'1.2-2' }}</p>
     <p><strong>Duración Modificada:</strong> {{ resultado.duracion_modificada | number:'1.2-2' }}</p>
     <p><strong>Convexidad:</strong> {{ resultado.convexidad | number:'1.2-2' }}</p>
-    <p><strong>Precio Máximo:</strong> {{ resultado.precio_maximo | currency:form.value.moneda }}</p>
+    <p><strong>💰 Precio de Mercado (COK aplicado):</strong> 
+      {{ resultado.precio_mercado | currency:form.value.moneda }}
+    </p>
+    <p><strong>💡 Precio Máximo Teórico (COK = 0%):</strong> 
+      {{ resultado.precio_maximo | currency:form.value.moneda }}
+    </p>
   </div>
 
   <mat-table *ngIf="flujos.length > 0" [dataSource]="flujos" class="mat-elevation-z8 mt-4 flow-table">
