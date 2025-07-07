@@ -3,12 +3,16 @@ import { LoginComponent } from './components/login/login.component';
 import { BonoFormComponent } from './components/bono-form/bono-form.component';
 import { seguridadGuard } from './guard/seguridad.guard';
 import { HomeComponent } from './components/home/home.component';
-
+import { LandingpageComponent } from './components/landingpage/landingpage.component';
+import { RegisterComponent } from './components/register/register.component';
 export const routes: Routes = [
-  {
+   {
     path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
+    component: LandingpageComponent // 👈 ahora esta es la página principal
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
   },
   {
     path: 'login',

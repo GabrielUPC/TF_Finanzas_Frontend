@@ -1,88 +1,56 @@
-/* Paleta basada en #bcc851 */
-:root {
-  --color-primario: #bcc851;
-  --color-primario-oscuro: #8a9a2a;
-  --color-secundario: #2d2d2d;
-  --color-fondo: #f8f9fa;
-  --color-blanco: #fff;
-  --color-sombra: rgba(188, 200, 81, 0.15);
-}
-
-/* Fondo general */
-body {
-  background: linear-gradient(120deg, #f8f9fa 0%, #f3f6e2 100%);
+:host {
+  display: block;
+  background-color: #e0f9b5; /* mismo fondo verde claro */
   min-height: 100vh;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* HEADER */
-header {
-  border-bottom: 3px solid var(--color-primario);
+/* Títulos */
+.titulo-principal {
+  color: #1b5e20;
 }
 
-h1,
-.titulo-seccion {
-  color: var(--color-primario-oscuro) !important;
-  letter-spacing: 1px;
+.subtitulo {
+  color: #4e793f;
 }
 
-.titulo-seccion {
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: 1.4rem;
-  border-left: 5px solid var(--color-primario);
-  padding-left: 12px;
-  margin-bottom: 1.2rem;
-  background: linear-gradient(90deg, #f3f6e2 0%, #fff 100%);
+/* Caja destacada */
+.hero-box {
+  background: linear-gradient(to right, #aed581, #7cb342); /* gradiente verde */
+  color: white !important;
+  border-radius: 16px;
 }
 
-/* HERO */
-.bg-dark {
-  background: linear-gradient(90deg, #bcc851 0%, #8a9a2a 100%) !important;
-  color: var(--color-blanco) !important;
-  border: none;
-}
-
-/* Tarjetas */
+/* Tarjetas informativas */
 .card {
   border: none;
-  border-radius: 1.2rem;
-  box-shadow: 0 4px 24px var(--color-sombra);
-  background: var(--color-blanco);
-  transition: box-shadow 0.3s, transform 0.3s;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-img-top {
+  object-fit: cover;
+  height: 180px;
 }
 
 .card-title {
-  color: var(--color-primario-oscuro) !important;
+  font-weight: bold;
+  color: #33691e;
 }
 
 .card-text {
-  color: var(--color-secundario);
+  color: #424242;
 }
 
 .hover-card:hover {
-  transform: translateY(-8px) scale(1.03);
-  box-shadow: 0 8px 32px var(--color-primario-oscuro);
-}
-
-/* Imágenes de las tarjetas */
-.card-img-top,
-.img-section {
-  height: 200px;
-  object-fit: cover;
-  border-bottom: 3px solid var(--color-primario);
-  border-radius: 1.2rem 1.2rem 0 0;
-  background: #f3f6e2;
-  transition: border-color 0.3s;
-}
-
-.card-img-top:hover,
-.img-section:hover {
-  border-color: var(--color-primario-oscuro);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 100, 0, 0.2);
 }
 
 /* Footer */
-footer {
-  border-top: 2px solid var(--color-primario);
-  color: #888;
-  background: transparent;
+.footer-text {
+  color: #607d8b;
 }
