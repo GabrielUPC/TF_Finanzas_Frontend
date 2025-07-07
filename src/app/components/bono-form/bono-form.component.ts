@@ -159,7 +159,7 @@ export class BonoFormComponent implements OnInit {
       );
     }
   }
-
+  role: string = '';
   guardar(): void {
     if (this.form.valid && this.resultado) {
       const id = this.loginService.getUsuarioId();
@@ -217,5 +217,8 @@ export class BonoFormComponent implements OnInit {
     if (contieneSimbolos) {
       event.preventDefault();
     }
+  }
+  esCliente(): boolean {
+    return this.loginService.getUserRole() === 'CLIENTE';
   }
 }
