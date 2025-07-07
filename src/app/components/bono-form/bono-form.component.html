@@ -159,7 +159,9 @@
   <!-- Resultados -->
   <div *ngIf="resultado" class="result-box">
     <h3>📈 Resultado Financiero</h3>
-    <p><strong>TCEA:</strong> {{ resultado.tcea * 100 | number : "1.2-2" }}%</p>
+    <p *ngIf="!esCliente()">
+      <strong>TCEA:</strong> {{ resultado.tcea * 100 | number : "1.2-2" }}%
+    </p>
     <p><strong>TREA:</strong> {{ resultado.trea * 100 | number : "1.2-2" }}%</p>
     <p>
       <strong>Duración:</strong> {{ resultado.duracion | number : "1.2-2" }}
