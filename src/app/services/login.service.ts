@@ -5,7 +5,7 @@ import { tap } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginService {
   private baseUrl = 'http://localhost:8080';
@@ -15,7 +15,7 @@ export class LoginService {
 
   login(request: JwtRequest) {
     return this.http.post<any>(`${this.baseUrl}/login`, request).pipe(
-      tap(response => {
+      tap((response) => {
         if (response.token) {
           sessionStorage.setItem('token', response.token);
           console.log('✅ Token almacenado en sessionStorage:', response.token);
@@ -25,7 +25,9 @@ export class LoginService {
       })
     );
   }
-
+  register(data: { username: string; password: string; rol: string }) {
+    return this.http.post(`${this.baseUrl}/api/auth/register`, data);
+  }
   verificar(): boolean {
     const token = sessionStorage.getItem('token');
     if (!token) {
@@ -49,7 +51,7 @@ export class LoginService {
     return {
       role: decoded?.rol,
       name: decoded?.nombre,
-      id: decoded?.id
+      id: decoded?.id,
     };
   }
 

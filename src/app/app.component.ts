@@ -6,6 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { LoginService } from './services/login.service';
 import { CommonModule } from '@angular/common';
+import { MenuComponent } from './components/menu/menu.component';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet,
@@ -14,31 +15,13 @@ import { CommonModule } from '@angular/common';
     MatToolbarModule,
     MatButtonModule,
     RouterModule,
-    CommonModule],
+    CommonModule,MenuComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'FrontedFinanzas';
-  role: string = '';
-  userName:string='';
-  constructor(private loginService: LoginService) {}
-  cerrar() {
-    sessionStorage.clear();
-  }
-
-  verificar() {
-    const userInfo = this.loginService.showRole();
-    if (userInfo) {
-      this.role = userInfo.role || '';
-      this.userName = userInfo.name || '';
-    }
-    return this.loginService.verificar();
-  }
- 
-  isAdmin() {
-    return this.role === 'ADMIN';
-  }
+  
 
   
 }

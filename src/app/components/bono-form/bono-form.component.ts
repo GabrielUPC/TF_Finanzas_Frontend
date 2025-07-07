@@ -6,7 +6,7 @@ import {
   Validators,
   ReactiveFormsModule,
   FormArray,
-  FormControl
+  FormControl,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,7 +14,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
+import {
+  MatNativeDateModule,
+  provideNativeDateAdapter,
+} from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
 
 import { BonoService } from '../../services/bono.service';
@@ -34,11 +37,11 @@ import { Flujo } from '../../models/Flujo';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatTableModule
+    MatTableModule,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './bono-form.component.html',
-  styleUrl: './bono-form.component.css'
+  styleUrl: './bono-form.component.css',
 })
 export class BonoFormComponent implements OnInit {
   form: FormGroup = new FormGroup({});
@@ -48,7 +51,15 @@ export class BonoFormComponent implements OnInit {
   monedas = ['PEN', 'USD'];
   frecuencias = ['Semestral', 'Anual'];
   gracias = ['Ninguna', 'Total'];
-  displayedColumns: string[] = ['periodo', 'fecha_pago', 'interes', 'amortizacion', 'cuotatotal', 'saldo', 'graciaPeriodo'];
+  displayedColumns: string[] = [
+    'periodo',
+    'fecha_pago',
+    'interes',
+    'amortizacion',
+    'cuotatotal',
+    'saldo',
+    'graciaPeriodo',
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -61,13 +72,19 @@ export class BonoFormComponent implements OnInit {
       nombre: ['', Validators.required],
       montonominal: [null, [Validators.required, this.validarMontoNominal]],
       moneda: ['', Validators.required],
-      tasainteres: [null, [Validators.required, Validators.min(0)]],
-      tasaCOK: [null, [Validators.required, Validators.min(0)]],
+      tasainteres: [
+        null,
+        [Validators.required, Validators.min(2), Validators.max(12)],
+      ],
+      tasaCOK: [
+        null,
+        [Validators.required, Validators.min(3), Validators.max(20)],
+      ],
       frecuenciapago: ['', Validators.required],
-      plazoanios: [null, [Validators.required, Validators.min(3)]], 
+      plazoanios: [null, [Validators.required, Validators.min(3)]],
       fechaemision: [null, Validators.required],
       idUsuario: [this.loginService.getUsuarioId()],
-      mapaGraciaPorPeriodo: this.fb.array([])
+      mapaGraciaPorPeriodo: this.fb.array([]),
     });
   }
 
@@ -77,15 +94,15 @@ export class BonoFormComponent implements OnInit {
 
   validarMontoNominal(control: FormControl) {
     const valoresPermitidos = [1000, 2000, 3000, 4000, 5000];
-    return valoresPermitidos.includes(control.value) ? null : { montoInvalido: true };
+    return valoresPermitidos.includes(control.value)
+      ? null
+      : { montoInvalido: true };
   }
- 
 
   validaPlazo(): boolean {
     const plazo = this.form.get('plazoanios')?.value;
     return plazo >= 3;
   }
-
 
   generarPeriodos(): void {
     const formArray = this.form.get('mapaGraciaPorPeriodo') as FormArray;
@@ -97,10 +114,12 @@ export class BonoFormComponent implements OnInit {
     const totalPeriodos = anios * pagosPorAño;
 
     for (let i = 1; i <= totalPeriodos; i++) {
-      formArray.push(this.fb.group({
-        periodo: [i],
-        tipo: ['Ninguna', Validators.required]
-      }));
+      formArray.push(
+        this.fb.group({
+          periodo: [i],
+          tipo: ['Ninguna', Validators.required],
+        })
+      );
     }
   }
 
@@ -125,16 +144,16 @@ export class BonoFormComponent implements OnInit {
         ...this.form.value,
         idUsuario: id,
         plazomeses: meses,
-        mapaGraciaPorPeriodo: graciaMap
+        mapaGraciaPorPeriodo: graciaMap,
       };
       delete data.plazoanios;
 
       this.bonoService.previsualizar(data).subscribe(
-        resp => {
+        (resp) => {
           this.flujos = resp.flujos || [];
           this.resultado = resp.resultado || undefined;
         },
-        err => {
+        (err) => {
           alert('Ocurrió un error al calcular el bono.');
         }
       );
@@ -162,7 +181,7 @@ export class BonoFormComponent implements OnInit {
         ...this.form.value,
         idUsuario: id,
         plazomeses: meses,
-        mapaGraciaPorPeriodo: graciaMap
+        mapaGraciaPorPeriodo: graciaMap,
       };
       delete data.plazoanios;
 
@@ -174,28 +193,29 @@ export class BonoFormComponent implements OnInit {
           this.resultado = undefined;
           (this.form.get('mapaGraciaPorPeriodo') as FormArray).clear();
         },
-        err => {
+        (err) => {
           alert('No se pudo guardar el bono.');
         }
       );
     } else {
-      alert('Primero debes calcular y revisar los resultados antes de guardar.');
+      alert(
+        'Primero debes calcular y revisar los resultados antes de guardar.'
+      );
     }
   }
   bloquearSimbolos(event: KeyboardEvent): void {
-  const tecla = event.key;
-  const simbolosBloqueados = ['-', '+', '*', '/', 'e', 'E'];
-  if (simbolosBloqueados.includes(tecla)) {
-    event.preventDefault();
+    const tecla = event.key;
+    const simbolosBloqueados = ['-', '+', '*', '/', 'e', 'E'];
+    if (simbolosBloqueados.includes(tecla)) {
+      event.preventDefault();
+    }
   }
-}
 
-bloquearPegado(event: ClipboardEvent): void {
-  const textoPegado = event.clipboardData?.getData('text') || '';
-  const contieneSimbolos = /[-+*/eE]/.test(textoPegado);
-  if (contieneSimbolos) {
-    event.preventDefault();
+  bloquearPegado(event: ClipboardEvent): void {
+    const textoPegado = event.clipboardData?.getData('text') || '';
+    const contieneSimbolos = /[-+*/eE]/.test(textoPegado);
+    if (contieneSimbolos) {
+      event.preventDefault();
+    }
   }
-}
-
 }
